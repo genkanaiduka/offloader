@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy - Offloader for macOS</title>
+  <style>
+    :root {
+      --bg: #0a0d14;
+      --card-bg: #121722;
+      --card-border: #1f293d;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --accent-green: #10b981;
+      --accent-cyan: #06b6d4;
+      --accent-gradient: linear-gradient(135deg, #10b981, #06b6d4);
+      --badge-bg: rgba(16, 185, 129, 0.12);
+      --badge-border: rgba(16, 185, 129, 0.3);
+    }
+
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg: #f8fafc;
+        --card-bg: #ffffff;
+        --card-border: #e2e8f0;
+        --text-main: #0f172a;
+        --text-muted: #64748b;
+        --badge-bg: rgba(16, 185, 129, 0.1);
+        --badge-border: rgba(16, 185, 129, 0.25);
+      }
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text-main);
+      line-height: 1.7;
+      padding: 40px 20px;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+    }
+
+    .container {
+      max-width: 840px;
+      width: 100%;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 40px;
+      text-align: center;
+    }
+
+    .app-icon {
+      width: 72px;
+      height: 72px;
+      border-radius: 18px;
+      background: var(--accent-gradient);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 25px rgba(16, 185, 129, 0.25);
+      margin-bottom: 16px;
+    }
+
+    .app-icon svg {
+      width: 44px;
+      height: 44px;
+      fill: none;
+      stroke: #ffffff;
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+    }
+
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 14px;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      background: var(--badge-bg);
+      border: 1px solid var(--badge-border);
+      color: var(--accent-green);
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .badge-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent-green);
+    }
+
+    /* Language Switcher */
+    .lang-switcher {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 24px;
+    }
+
+    .lang-btn {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
+      padding: 6px 16px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .lang-btn.active {
+      background: var(--accent-gradient);
+      color: #ffffff;
+      border-color: transparent;
+    }
+
+    /* Content Card */
+    .card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 36px 32px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+      margin-bottom: 30px;
+    }
+
+    h2 {
+      font-size: 1.35rem;
+      font-weight: 600;
+      margin-top: 32px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--text-main);
+    }
+
+    h2:first-of-type {
+      margin-top: 0;
+    }
+
+    p {
+      color: var(--text-muted);
+      margin-bottom: 16px;
+      font-size: 0.98rem;
+    }
+
+    ul {
+      list-style-type: none;
+      padding-left: 0;
+      margin-bottom: 20px;
+    }
+
+    li {
+      position: relative;
+      padding-left: 24px;
+      margin-bottom: 10px;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: var(--accent-green);
+      font-weight: 700;
+    }
+
+    .highlight-box {
+      background: var(--badge-bg);
+      border: 1px solid var(--badge-border);
+      border-radius: 12px;
+      padding: 18px 20px;
+      margin: 20px 0;
+    }
+
+    .highlight-box p {
+      color: var(--text-main);
+      margin-bottom: 0;
+      font-weight: 500;
+      font-size: 0.95rem;
+    }
+
+    footer {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      margin-top: 40px;
+    }
+
+    .lang-section {
+      display: none;
+    }
+
+    .lang-section.active {
+      display: block;
+    }
+
+    a {
+      color: var(--accent-cyan);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <div class="app-icon">
+        <svg viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="9"/>
+          <path d="M12 7v10M7 12h10"/>
+        </svg>
+      </div>
+      <h1>Offloader</h1>
+      <p class="subtitle">Privacy Policy / プライバシーポリシー</p>
+      <div class="badge-pill">
+        <span class="badge-dot"></span>
+        100% On-Device & Zero Data Collection
+      </div>
+
+      <div class="lang-switcher">
+        <button class="lang-btn active" onclick="switchLang('ja')">日本語</button>
+        <button class="lang-btn" onclick="switchLang('en')">English</button>
+      </div>
+    </header>
+
+    <!-- Japanese Version -->
+    <main id="lang-ja" class="card lang-section active">
+      <h2>1. 基本方針（プライバシー最優先設計）</h2>
+      <p>
+        「Offloader」（以下「本アプリ」）は、映像クリエイター、フォトグラファー、DIT（Digital Imaging Technician）の皆様の大切な撮影メディアを、安全かつ確実にバックアップ・オフロードするために設計された macOS 専用アプリケーションです。
+      </p>
+      <p>
+        本アプリは開発当初より **「完全ローカル・ゼロデータ収集（Zero Data Collection）」** の理念に基づき設計されています。ユーザーの個人情報、ファイルデータ、操作ログなどを外部サーバーに送信または収集することは一切ありません。
+      </p>
+
+      <div class="highlight-box">
+        <p>🛡️ <strong>要約:</strong> 本アプリはお客様のメディアデータ、個人情報、メタデータを一切収集・送信しません。すべての処理はお客様の Mac 内で完結します。</p>
+      </div>
+
+      <h2>2. 収集しない情報</h2>
+      <p>本アプリは、以下のいかなる情報も収集、保存、共有いたしません：</p>
+      <ul>
+        <li><strong>個人識別情報:</strong> 氏名、メールアドレス、電話番号、Apple ID 等</li>
+        <li><strong>メディアデータ・ファイル内容:</strong> 撮影映像、写真、音声、ファイル名、ディレクトリ構造など</li>
+        <li><strong>利用状況・アナリティクスデータ:</strong> アプリの利用頻度、起動履歴、操作ログ</li>
+        <li><strong>位置情報・デバイス追跡データ:</strong> 端末識別子（IDFV/IDFA）、IPアドレス、位置情報</li>
+        <li><strong>広告追跡:</strong> 本アプリには広告モジュールやトラッキングSDKは一切含まれていません。</li>
+      </ul>
+
+      <h2>3. デバイス上のファイルアクセスと権限</h2>
+      <p>
+        本アプリは Apple が定める厳格な **App Sandbox（アプリケーションサンドボックス）** 環境下で動作します。
+      </p>
+      <ul>
+        <li><strong>ユーザーが選択したファイル・ドライブのみアクセス:</strong> お客様がドラッグ＆ドロップまたはファイル選択ダイアログで明示的に指定したカメラカード（ソース）および保存先ドライブ（ターゲット）に対してのみ読み込み・書き込みを行います。</li>
+        <li><strong>完全ローカル処理:</strong> メディアのコピー処理、xxHash64 / MD5 / SHA-256 チェックサムの照合計算、およびオフロードレポート（PDF）の生成は、すべてお客様の Mac のローカルCPU/メモリ上で行われます。</li>
+      </ul>
+
+      <h2>4. ネットワーク通信について</h2>
+      <p>
+        本アプリは外部のインターネットサーバーと通信を行いません。アプリ内部でUIとバックエンド処理エンジン（チェックサム高速計算機構）を連動させるためにローカルホスト（<code>localhost</code> / <code>127.0.0.1</code>）内での通信を使用していますが、これは端末外部には一切送信されません。
+      </p>
+
+      <h2>5. 第三者への情報提供</h2>
+      <p>
+        本アプリはいかなる第三者サービス（Google Analytics、Firebase、Facebook SDK など）も利用しておらず、お客様のデータが第三者に提供されることはありません。
+      </p>
+
+      <h2>6. お子様のプライバシー（Children's Privacy）</h2>
+      <p>
+        本アプリは13歳未満のお子様を含む、いかなる年齢のユーザーからも個人情報を収集いたしません。
+      </p>
+
+      <h2>7. プライバシーポリシーの改定</h2>
+      <p>
+        将来的に機能追加等により本ポリシーを変更する場合は、本ページおよびアップデート通知にて事前にお知らせいたします。
+      </p>
+
+      <h2>8. お問い合わせ窓口</h2>
+      <p>
+        本プライバシーポリシーに関するご質問やご不明な点がございましたら、以下の連絡先までお気軽にお問い合わせください。
+      </p>
+      <p>
+        <strong>開発者:</strong> GEN KANAIZUKA<br>
+        <strong>アプリ名:</strong> Offloader<br>
+        <strong>連絡先:</strong> <a href="mailto:genkanaiduka@gmail.com">genkanaiduka@gmail.com</a>
+      </p>
+    </main>
+
+    <!-- English Version -->
+    <main id="lang-en" class="card lang-section">
+      <h2>1. Overview & Core Philosophy</h2>
+      <p>
+        Offloader (the "Application") is a professional media offloading and verified backup application engineered for filmmakers, cinematographers, photographers, and Digital Imaging Technicians (DITs) on macOS.
+      </p>
+      <p>
+        The Application is designed from the ground up with a strict **"Privacy by Design & Zero Data Collection"** architecture. We do not collect, transmit, store, or sell any of your personal information, media footage, or usage telemetry.
+      </p>
+
+      <div class="highlight-box">
+        <p>🛡️ <strong>Summary:</strong> Offloader operates 100% on-device. We never see, touch, or transmit your footage, metadata, or personal data.</p>
+      </div>
+
+      <h2>2. Data We Do NOT Collect</h2>
+      <p>The Application does not collect, track, or share any of the following:</p>
+      <ul>
+        <li><strong>Personally Identifiable Information (PII):</strong> No names, email addresses, phone numbers, or Apple IDs.</li>
+        <li><strong>Media & File Contents:</strong> No video clips, RAW files, photos, audio, directory paths, or filenames.</li>
+        <li><strong>Usage Analytics:</strong> No tracking SDKs, analytics frameworks, or session recording tools.</li>
+        <li><strong>Device Identifiers & Location:</strong> No IDFA, IDFV, IP addresses, or geolocation tracking.</li>
+        <li><strong>Advertising:</strong> Zero third-party ad networks or marketing trackers are embedded.</li>
+      </ul>
+
+      <h2>3. File Access & Security (App Sandbox)</h2>
+      <p>
+        Offloader runs securely inside the macOS **App Sandbox** enforced by Apple.
+      </p>
+      <ul>
+        <li><strong>Explicit User Consent:</strong> The Application only reads from and writes to storage volumes and directories explicitly selected by the user via macOS system dialogs or drag-and-drop.</li>
+        <li><strong>Purely Local Processing:</strong> Multi-target streaming, bit-exact checksum verification (xxHash64, MD5, SHA-256), and PDF verification report generation execute strictly on your local hardware.</li>
+      </ul>
+
+      <h2>4. Network & Internet Connectivity</h2>
+      <p>
+        Offloader does not connect to external servers over the internet. The Application uses a secure loopback connection (<code>localhost</code> / <code>127.0.0.1</code>) strictly for inter-process communication between its native WebKit UI and local engine on your Mac. No data ever leaves your device.
+      </p>
+
+      <h2>5. Third-Party Services</h2>
+      <p>
+        The Application contains no third-party telemetry, analytics, or tracking services (such as Google Analytics, Firebase, Mixpanel, or Facebook SDK).
+      </p>
+
+      <h2>6. Children's Privacy</h2>
+      <p>
+        The Application does not collect personal information from anyone, including children under the age of 13.
+      </p>
+
+      <h2>7. Changes to This Policy</h2>
+      <p>
+        We may update this Privacy Policy from time to time. Any changes will be posted on this page with an updated effective date.
+      </p>
+
+      <h2>8. Contact Us</h2>
+      <p>
+        If you have questions or suggestions about this Privacy Policy, please contact us:
+      </p>
+      <p>
+        <strong>Developer:</strong> GEN KANAIZUKA<br>
+        <strong>Application:</strong> Offloader for macOS<br>
+        <strong>Email:</strong> <a href="mailto:genkanaiduka@gmail.com">genkanaiduka@gmail.com</a>
+      </p>
+    </main>
+
+    <footer>
+      <p>Last Updated: October 15, 2026</p>
+      <p>&copy; 2026 Offloader. All rights reserved.</p>
+    </footer>
+  </div>
+
+  <script>
+    function switchLang(lang) {
+      document.querySelectorAll('.lang-section').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.lang-btn').forEach(el => el.classList.remove('active'));
+      
+      const targetMain = document.getElementById('lang-' + lang);
+      if (targetMain) targetMain.classList.add('active');
+      
+      const targetBtn = Array.from(document.querySelectorAll('.lang-btn')).find(b => 
+        (lang === 'ja' && b.textContent.includes('日本語')) || 
+        (lang === 'en' && b.textContent.includes('English'))
+      );
+      if (targetBtn) targetBtn.classList.add('active');
+    }
+
+    // Auto-detect browser language
+    (function() {
+      const userLang = navigator.language || navigator.userLanguage;
+      if (userLang && userLang.startsWith('en')) {
+        switchLang('en');
+      }
+    })();
+  </script>
+</body>
+</html>
