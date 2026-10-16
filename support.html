@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Support & Help Center - Offloader for macOS</title>
+  <style>
+    :root {
+      --bg: #0a0d14;
+      --card-bg: #121722;
+      --card-border: #1f293d;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --accent-green: #10b981;
+      --accent-cyan: #06b6d4;
+      --accent-gradient: linear-gradient(135deg, #10b981, #06b6d4);
+      --badge-bg: rgba(16, 185, 129, 0.12);
+      --badge-border: rgba(16, 185, 129, 0.3);
+      --faq-hover: #182030;
+    }
+
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg: #f8fafc;
+        --card-bg: #ffffff;
+        --card-border: #e2e8f0;
+        --text-main: #0f172a;
+        --text-muted: #64748b;
+        --badge-bg: rgba(16, 185, 129, 0.1);
+        --badge-border: rgba(16, 185, 129, 0.25);
+        --faq-hover: #f8fafc;
+      }
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text-main);
+      line-height: 1.7;
+      padding: 48px 20px;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+    }
+
+    .container {
+      max-width: 840px;
+      width: 100%;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 36px;
+      text-align: center;
+    }
+
+    .app-icon {
+      width: 76px;
+      height: 76px;
+      border-radius: 20px;
+      background: var(--accent-gradient);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 12px 30px rgba(16, 185, 129, 0.28);
+      margin-bottom: 18px;
+    }
+
+    .app-icon svg {
+      width: 46px;
+      height: 46px;
+      fill: none;
+      stroke: #ffffff;
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    h1 {
+      font-size: 2.4rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+    }
+
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+    }
+
+    /* Contact Hero Banner */
+    .contact-hero {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.08), rgba(6, 182, 212, 0.08));
+      border: 1px solid var(--badge-border);
+      border-radius: 20px;
+      padding: 34px 30px;
+      margin-bottom: 28px;
+      text-align: center;
+    }
+
+    .contact-hero h2 {
+      font-size: 1.45rem;
+      margin-bottom: 8px;
+    }
+
+    .contact-hero p {
+      color: var(--text-muted);
+      margin-bottom: 22px;
+      font-size: 0.98rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .contact-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--accent-gradient);
+      color: #ffffff;
+      padding: 13px 30px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 1rem;
+      text-decoration: none;
+      box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .contact-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 25px rgba(16, 185, 129, 0.4);
+    }
+
+    .contact-meta {
+      margin-top: 18px;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* Cards */
+    .card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 34px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+      margin-bottom: 24px;
+    }
+
+    .card h2 {
+      font-size: 1.35rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* System Requirements Grid */
+    .specs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .spec-box {
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 18px;
+      background: rgba(0, 0, 0, 0.02);
+    }
+
+    .spec-label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 6px;
+    }
+
+    .spec-value {
+      font-weight: 600;
+      font-size: 1.05rem;
+      color: var(--text-main);
+    }
+
+    /* Accordion FAQ */
+    .faq-item {
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      margin-bottom: 14px;
+      overflow: hidden;
+      transition: background 0.2s ease;
+    }
+
+    .faq-question {
+      padding: 18px 22px;
+      font-weight: 600;
+      font-size: 1.02rem;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      user-select: none;
+    }
+
+    .faq-question:hover {
+      background-color: var(--faq-hover);
+    }
+
+    .faq-arrow {
+      transition: transform 0.2s ease;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .faq-item.open .faq-arrow {
+      transform: rotate(180deg);
+    }
+
+    .faq-answer {
+      display: none;
+      padding: 0 22px 22px;
+      color: var(--text-muted);
+      font-size: 0.96rem;
+      border-top: 1px solid var(--card-border);
+      background-color: rgba(0, 0, 0, 0.02);
+      padding-top: 18px;
+      line-height: 1.7;
+    }
+
+    .faq-item.open .faq-answer {
+      display: block;
+    }
+
+    code {
+      background: rgba(0, 0, 0, 0.2);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: var(--accent-green);
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      margin-top: 40px;
+    }
+
+    footer a {
+      color: var(--accent-cyan);
+      text-decoration: none;
+      margin: 0 8px;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <div class="app-icon">
+        <svg viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="9"/>
+          <path d="M12 7v10M7 12h10"/>
+        </svg>
+      </div>
+      <h1>Offloader</h1>
+      <p class="subtitle">Support & Help Center for macOS</p>
+    </header>
+
+    <!-- Contact Hero -->
+    <section class="contact-hero">
+      <h2>Need Assistance with Offloader?</h2>
+      <p>
+        Have questions about media offloading, checksum algorithms, feature requests, or encountered an issue on set? Get in touch with the developer directly.
+      </p>
+      <a href="mailto:genkanaiduka@gmail.com?subject=[Offloader Support Request]" class="contact-btn">
+        ✉️ Contact Developer Support
+      </a>
+      <div class="contact-meta">
+        Developer: <strong>GEN KANAIZUKA</strong> &bull; Email: <strong>genkanaiduka@gmail.com</strong><br>
+        Inquiries are typically answered within 24 to 48 hours.
+      </div>
+    </section>
+
+    <!-- System Requirements -->
+    <section class="card">
+      <h2>💻 System Requirements & Specifications</h2>
+      <div class="specs-grid">
+        <div class="spec-box">
+          <div class="spec-label">Supported macOS</div>
+          <div class="spec-value">macOS 13.0 (Ventura) or later</div>
+        </div>
+        <div class="spec-box">
+          <div class="spec-label">Architecture</div>
+          <div class="spec-value">Apple Silicon (M1/M2/M3/M4) & Intel</div>
+        </div>
+        <div class="spec-box">
+          <div class="spec-label">Licensing</div>
+          <div class="spec-value">100% Perpetual (No Subscriptions)</div>
+        </div>
+        <div class="spec-box">
+          <div class="spec-label">Security</div>
+          <div class="spec-value">Apple App Sandbox Enforced</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="card">
+      <h2>❓ Frequently Asked Questions (FAQ)</h2>
+
+      <div class="faq-item open">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          What camera media cards and external drives are supported?
+          <span class="faq-arrow">▼</span>
+        </div>
+        <div class="faq-answer">
+          Offloader supports every media card and storage volume recognized by macOS. This includes CFexpress Type A & B, RED Mini-Mag, CFast 2.0, SD cards (UHS-II / UHS-I), and microSD cards. Output backup destinations include portable NVMe SSDs (Thunderbolt / USB4), hardware RAID 0/5/6 enclosures, external spinning hard drives, and network-attached storage (SMB / NAS).
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          Which checksum algorithm should I choose (xxHash64, MD5, SHA-256)?
+          <span class="faq-arrow">▼</span>
+        </div>
+        <div class="faq-answer">
+          <strong>For High-Speed On-Set Production:</strong> We strongly recommend <code>xxHash64</code>. It delivers multi-gigabyte-per-second verification speed without throttling ultra-fast NVMe SSDs or Thunderbolt card readers, guaranteeing bit-exact byte-for-byte fidelity.<br><br>
+          <strong>For Post-Production & Studio Deliverables:</strong> Select <code>MD5</code> or <code>SHA-256</code> if your film production insurance, streaming platform mandate (e.g., Netflix, Amazon Studios), or post-facility deliverable guidelines explicitly require standard cryptographic digests.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          How do I resolve disk or card permission errors on macOS?
+          <span class="faq-arrow">▼</span>
+        </div>
+        <div class="faq-answer">
+          macOS security features enforce granular permissions for external volumes:<br>
+          1. Open <strong>System Settings > Privacy & Security</strong> on your Mac.<br>
+          2. Scroll to <strong>Files and Folders</strong>.<br>
+          3. Locate <strong>Offloader</strong> in the list and ensure <strong>Removable Volumes</strong> is toggled ON.<br>
+          4. Relaunch Offloader to allow full read and write access to your connected media cards and backup drives.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          Where are offload verification reports (PDF & Manifest) stored?
+          <span class="faq-arrow">▼</span>
+        </div>
+        <div class="faq-answer">
+          Upon every completed offload, Offloader automatically generates an audit-ready PDF verification report and manifest directly in the root of each destination target folder. The report logs file counts, total bytes copied, transfer duration, average throughput, and bit-exact checksum hashes for every single clip.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          Are there any recurring subscriptions or hidden fees?
+          <span class="faq-arrow">▼</span>
+        </div>
+        <div class="faq-answer">
+          No. Offloader is sold under a 100% perpetual license model. You buy it once on the Mac App Store and own it forever. There are zero subscriptions, no monthly charges, and no hidden in-app purchases.
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p>&copy; 2026 GEN KANAIZUKA. All rights reserved.</p>
+      <p style="margin-top: 6px;">
+        <a href="privacy-policy.html">Privacy Policy</a>
+        &bull;
+        <a href="mailto:genkanaiduka@gmail.com">Contact Support</a>
+      </p>
+    </footer>
+  </div>
+
+  <script>
+    function toggleFaq(el) {
+      const parent = el.parentElement;
+      parent.classList.toggle('open');
+    }
+  </script>
+</body>
+</html>
